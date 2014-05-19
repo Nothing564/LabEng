@@ -17,7 +17,9 @@ public class LivroVO {
     private String resumo;
     private String indice;
     private String formato;
-    private String categoria;
+    private String categoria,
+                   autor, 
+                   titulo;
     private int codautor;
     private int codtitulo;
     private int cod;
@@ -138,5 +140,19 @@ public class LivroVO {
      */
     public void setQuantidade(int quantidade) {
         this.quantidade = quantidade;
+    }
+
+    /**
+     * @return the autor
+     */
+    public String getAutor() {
+        return autor;
+    }
+
+    /**
+     * @param autor the autor to set
+     */
+    public void setAutor(String autor) {
+        this.autor = autor;
     }
 }
