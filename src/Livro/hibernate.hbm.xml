@@ -5,7 +5,7 @@
         <id name="cod" type="integer">
             <column name="CodLivro"/>
         </id>
-        <property name="isbn" type="string">
+        <property name="isbn" type="float">
       <column length="45" name="isbn" not-null="true"/>
     </property>
     <property name="autor" type="string">
@@ -17,7 +17,7 @@
     <property name="titulo" type="string">
       <column length="45" name="titulo" not-null="true"/>
     </property>
-    <property name="precoVenda" type="float">
+    <property name="precoVenda" type="double">
       <column length="45" name="ValorUnt" not-null="true"/>
     </property>
     <property name="quantidade" type="integer">
