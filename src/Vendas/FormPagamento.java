@@ -19,6 +19,7 @@ public class FormPagamento extends javax.swing.JFrame {
 
     /**
      * Creates new form FormPagamento
+     * Define a forma de pagamento
      */
     public FormPagamento(int forma, double valor) {
         this.forma = forma;
@@ -123,7 +124,10 @@ public class FormPagamento extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    /**
+     * A perder o foco calcula o troco e exibe em tela.
+     * 
+     */
     private void txtPagoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPagoFocusLost
         // TODO add your handling code here:
         troco = valor - pago;

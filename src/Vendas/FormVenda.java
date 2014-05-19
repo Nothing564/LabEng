@@ -138,7 +138,7 @@ public class FormVenda extends javax.swing.JFrame {
         FormPagamento pag = new FormPagamento(Integer.parseInt(JOptionPane.showInputDialog("Forma de pagamento:\n 1-Dinheiro\n 2-Cartão ")),Double.parseDouble(txtTotal.getText()));
         pag.setVisible(true);
     }//GEN-LAST:event_btSalvarActionPerformed
-
+    
     private void btRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRemoverActionPerformed
         // TODO add your handling code here:
         double valorItem = Double.parseDouble((String)table.getValueAt(table.getSelectedRow(),4));
