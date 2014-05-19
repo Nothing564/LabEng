@@ -20,7 +20,7 @@
     <property name="precoVenda" type="float">
       <column length="45" name="ValorUnt" not-null="true"/>
     </property>
-    <property name="quantidade" type="string">
+    <property name="quantidade" type="integer">
       <column length="45" name="qtd" not-null="true"/>
     </property>
     </class>
