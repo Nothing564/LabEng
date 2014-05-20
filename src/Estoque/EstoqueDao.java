@@ -4,38 +4,120 @@
  */
 package Estoque;
 
+import Livro.LivroVO;
 import java.sql.SQLException;
 import java.util.List;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.classic.Session;
 
 /**
- *
+ * DAO para o estoque de livros.
  * @author Guilherme
  */
-public class EstoqueDao implements DAO<Object>{
-
-    @Override
-    public boolean inserir(Object obj) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+public class EstoqueDao implements DAO<LivroVO>{
+    SessionFactory sessionFactory;
+    
+    /**
+     * Construtora para iniciar a sessão no hibernarte
+     */
+    public EstoqueDao(){
+        sessionFactory = new Configuration().addClass(LivroVO.class)
+                                            .buildSessionFactory();
     }
 
-    @Override
-    public boolean alterar(Object obj) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public boolean excluir(Object obj) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public Object pesquisar(int pk) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
+/**
+ * Pesquisa livro no estoque
+ * @param criterio
+ * @return lista de livros no estoque.
+ * @throws SQLException 
+ */
     @Override
     public List listar(String criterio) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        List list = null;
+        try{
+        Session session = sessionFactory.openSession();
+        list = session.find(criterio);
+        session.flush();
+        session.close();
+        }catch(Throwable  e){
+       throw new SQLException("Erro na listagem de livro: "+e.getCause());
+        }
+        return list;
+    }
+/**
+ * Insere livro no estoque. Serve também para alterar o livro já existente
+ * @param obj
+ * @return
+ * @throws SQLException 
+ */
+    @Override
+    public boolean inserir(LivroVO obj) throws SQLException {
+       try{
+        Session session = sessionFactory.openSession();
+        session.saveOrUpdate(obj);
+        session.flush();
+        session.close();
+        return true;
+        }catch(Throwable  e){
+       throw new SQLException("Erro na classe EstoqueDao: "+e.getCause());
+        }
+    }
+    
+    /**
+     * Altera um campo da tabela livro 
+     * @param obj
+     * @return true, caso a operação seja bem sucessedida
+     * @throws SQLException 
+     */
+    @Override
+    public boolean alterar(LivroVO obj) throws SQLException {
+        try{
+        Session session = sessionFactory.openSession();
+        session.saveOrUpdate(obj);
+        session.flush();
+        session.close();
+        return true;
+        }catch(Throwable  e){
+       throw new SQLException("Erro na classe EstoqueDao: "+e.getCause());
+        }
+    }
+/**
+ * Exclui um livro do estoque
+ * @param obj
+ * @return
+ * @throws SQLException 
+ */
+    @Override
+    public boolean excluir(LivroVO obj) throws SQLException {
+        try{
+        Session session = sessionFactory.openSession();
+        session.delete(obj);
+        session.flush();
+        session.close();
+        return true;
+        }catch(Throwable  e){
+       throw new SQLException("Erro na classe EstoqueDao: "+e.getCause());
+        }
+    }
+    
+    /**
+     * Pesquisa o livro no estoque.
+     * @param pk
+     * @return livro do estoque. Retorna null se o livro não esta listado no estoque.
+     * @throws SQLException 
+     */
+    @Override
+    public LivroVO pesquisar(int pk) throws SQLException {
+        try{
+        Session session = sessionFactory.openSession();
+        LivroVO livroVO = (LivroVO)session.get(LivroVO.class, pk);
+        session.flush();
+        session.close();
+        return livroVO;
+        }catch(Throwable  e){
+       throw new SQLException("Erro na classe EstoqueDao: " + e.getCause());
+        }
     }
     
 }
