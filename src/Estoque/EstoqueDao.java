@@ -38,9 +38,9 @@ public class EstoqueDao implements DAO<LivroVO>{
         try{
         Session session = sessionFactory.openSession();
         if(criterio != null)
-        list = session.createQuery("WHERE "+criterio).list();//  find(criterio);
+        list = session.createQuery("FROM livro WHERE "+criterio).list();//  find(criterio);
         else
-            list = session.createQuery("SELECT * FROM livro").list();
+            list = session.createQuery("FROM livro").list();
         session.flush();
         session.close();
         }catch(Throwable  e){
