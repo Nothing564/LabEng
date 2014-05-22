@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.util.List;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-import org.hibernate.classic.Session;
+import org.hibernate.Session;
 
 /**
  * DAO para o estoque de livros.
@@ -27,7 +27,7 @@ public class EstoqueDao implements DAO<LivroVO>{
     }
 
 /**
- * Pesquisa livro no estoque
+ * Pesquisa livro no estoque por critério. Se o critério for null, o método retorna uma lista com a tabela toda.
  * @param criterio
  * @return lista de livros no estoque.
  * @throws SQLException 
@@ -37,7 +37,10 @@ public class EstoqueDao implements DAO<LivroVO>{
         List list = null;
         try{
         Session session = sessionFactory.openSession();
-        list = session.find(criterio);
+        if(criterio != null)
+        list = session.createQuery("WHERE "+criterio).list();//  find(criterio);
+        else
+            list = session.createQuery("SELECT * FROM livro").list();
         session.flush();
         session.close();
         }catch(Throwable  e){
