@@ -6,6 +6,16 @@
 
 package Vendas;
 
+import java.sql.Connection;
+import java.util.Date;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Vector;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author David
@@ -15,26 +25,71 @@ public class FormPagamento extends javax.swing.JFrame {
     double valor;
     double pago;
     double troco;
+    String cliente, funcionario;
     String strTroco;
+    Date data = new Date();
+    private String usuario = "root", senha = "toor", porta = "3306" , servidor = "localhost", nomeBanco = "livrarialabeng";
+    private Connection conexao=null;
+    private ResultSet rs=null;
+    private Statement stm=null;
+    Vector item;
+    
 
     /**
      * Creates new form FormPagamento
+     * @param forma
+     * @param valor
+     * @param cli
+     * @param itens
+     * @param fun
      */
-    public FormPagamento(int forma, double valor) {
+    public FormPagamento(int forma, double valor, String cli, String fun,Vector itens) {
+        this.data.getDate();
         this.forma = forma;
         this.valor = valor;
+        this.cliente = cli;
+        this.funcionario = fun;
+        this.item= itens;
+        
         initComponents();
+        
          if (forma == 2){
             pago = valor;
+            troco = Integer.parseInt(txtPago.getText()) - valor;
             txtPago.setEditable(false);
-            txtPago.setText(String.valueOf(pago));
+            txtPago.setText(String.valueOf(troco));
          }
         txtTotal.setText(String.valueOf(valor));
        
     }
+    
+    /**
+     *
+     */
+    public void conexaoBD(){
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            
+        } catch (ClassNotFoundException ex) {
+            System.out.println(ex);
+        }
+      
+        try{
+            
+            String strCon = "jdbc:mysql://"+servidor+":"+porta+"/"+nomeBanco;
+            conexao = DriverManager.getConnection(strCon, usuario, senha);
+        }
+        catch(Exception ee){
+            System.out.println(ee);
+            
+        }
+    }
 
-
+    /**
+     *
+     */
     public FormPagamento() {
+        
         initComponents();
     }
 
@@ -53,9 +108,9 @@ public class FormPagamento extends javax.swing.JFrame {
         txtPago = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         txtTroco = new javax.swing.JTextField();
-        btFinalizar = new javax.swing.JButton();
+        btnFinalizar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setText("Total:");
 
@@ -76,7 +131,12 @@ public class FormPagamento extends javax.swing.JFrame {
         txtTroco.setEditable(false);
         txtTroco.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
 
-        btFinalizar.setText("Finalizar");
+        btnFinalizar.setText("Finalizar");
+        btnFinalizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFinalizarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -97,7 +157,7 @@ public class FormPagamento extends javax.swing.JFrame {
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btFinalizar)
+                            .addComponent(btnFinalizar)
                             .addComponent(txtTroco))))
                 .addContainerGap(239, Short.MAX_VALUE))
         );
@@ -116,9 +176,9 @@ public class FormPagamento extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(txtTroco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(btFinalizar)
-                .addContainerGap(171, Short.MAX_VALUE))
+                .addGap(31, 31, 31)
+                .addComponent(btnFinalizar)
+                .addContainerGap(158, Short.MAX_VALUE))
         );
 
         pack();
@@ -126,18 +186,40 @@ public class FormPagamento extends javax.swing.JFrame {
 
     private void txtPagoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPagoFocusLost
         // TODO add your handling code here:
-        troco = valor - pago;
-        strTroco = String.valueOf(troco);
-        txtTroco.setText(strTroco);
+         if(Double.parseDouble(txtPago.getText())< valor){
+             JOptionPane.showMessageDialog(null,"Erro! Valor invalidado.");
+         }
+         troco = Double.parseDouble(txtPago.getText()) - valor;
+         txtTroco.setText(String.valueOf(troco));
     }//GEN-LAST:event_txtPagoFocusLost
 
+    private void btnFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinalizarActionPerformed
+        // TODO add your handling code here:
+        String sql= null;
+        try {
+            conexaoBD();
+            sql = "INSERT INTO venda(CodCliente, CodFuncionario, valor, data) VALUES ("+cliente+","+funcionario+","+valor+", NOW())";
+            stm = conexao.createStatement();
+            stm.execute(sql);
+            for(Object x: item){
+                    sql = "UPDATE livro SET qtd = (qtd-1) where CodLivro = " + (String)x;
+                    stm = conexao.createStatement();
+                    stm.execute(sql);
+                }
+            conexao.close();
+            JOptionPane.showMessageDialog(null,"Gravado com sucesso!");
+        } catch (SQLException ex) {
+            System.out.println(ex + sql);
+            JOptionPane.showMessageDialog(null,"Erro ao gravar!");
+    }//GEN-LAST:event_btnFinalizarActionPerformed
+    }
     /**
      * @param args the command line arguments
      */
    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btFinalizar;
+    private javax.swing.JButton btnFinalizar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

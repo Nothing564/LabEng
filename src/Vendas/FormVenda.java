@@ -6,6 +6,12 @@
 
 package Vendas;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Vector;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -17,6 +23,13 @@ import javax.swing.table.DefaultTableModel;
 public class FormVenda extends javax.swing.JFrame {
     private JTable table;
     double total = 0;
+    private String usuario = "root", senha = "toor", porta = "3306" , servidor = "localhost", nomeBanco = "livrarialabeng";
+    private Connection conexao=null;
+    private ResultSet rs=null;
+    private Statement stm=null;
+    DefaultTableModel dtm;
+    Vector vc = new Vector();
+    
     /**
      * Creates new form FormVenda
      */
@@ -42,6 +55,11 @@ public class FormVenda extends javax.swing.JFrame {
         btRemover = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         txtTotal = new javax.swing.JTextField();
+        txtCodcli = new javax.swing.JTextField();
+        txtCodfun = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        btCliente = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -74,6 +92,29 @@ public class FormVenda extends javax.swing.JFrame {
         txtTotal.setEditable(false);
         txtTotal.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
 
+        txtCodcli.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtCodcliFocusLost(evt);
+            }
+        });
+
+        txtCodfun.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtCodfunFocusLost(evt);
+            }
+        });
+
+        jLabel3.setText("Código Cliente");
+
+        jLabel4.setText("Código Funcionário");
+
+        btCliente.setText("Novo");
+        btCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btClienteActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -81,27 +122,45 @@ public class FormVenda extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(spLista)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(spLista)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel1)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(btAdicionar))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(btRemover)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel2)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(0, 17, Short.MAX_VALUE)))
+                        .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btAdicionar))
+                                .addComponent(jLabel3)
+                                .addGap(73, 73, 73))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(btRemover)
+                                .addComponent(txtCodcli)
+                                .addGap(69, 69, 69)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addGap(22, 175, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(txtCodfun, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btSalvar)
-                .addGap(22, 22, 22))
+                                .addComponent(btSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(35, 35, 35))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -118,9 +177,19 @@ public class FormVenda extends javax.swing.JFrame {
                     .addComponent(btRemover)
                     .addComponent(jLabel2)
                     .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(25, 25, 25)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btSalvar)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtCodcli, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtCodfun, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btSalvar)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         pack();
@@ -129,23 +198,76 @@ public class FormVenda extends javax.swing.JFrame {
      * Adiciona um produto a lista de produtos.
      */
     private void btAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAdicionarActionPerformed
-    
+         try {
+            String item[] = new String[4];
+            conexaoBD();
+            String sql = "SELECT CodLivro, titulo, ValorUnt FROM livro WHERE CodLivro = " + txtCodigo.getText();
+            stm = conexao.createStatement();
+            rs = stm.executeQuery(sql);
+            rs.first();
+            item[0] = rs.getString("CodLivro");
+            vc.add(item[0]);
+            item[1] = rs.getString("titulo");
+            item[2] = "1";
+            item[3] = rs.getString("ValorUnt");
+            total = total + (rs.getDouble("ValorUnt") * Double.parseDouble(item[2]));
+            dtm.addRow(item);
+            conexao.close();
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
         txtTotal.setText(String.valueOf(total));
     }//GEN-LAST:event_btAdicionarActionPerformed
 
     private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
         // TODO add your handling code here:
-        FormPagamento pag = new FormPagamento(Integer.parseInt(JOptionPane.showInputDialog("Forma de pagamento:\n 1-Dinheiro\n 2-Cartão ")),Double.parseDouble(txtTotal.getText()));
+        FormPagamento pag = new FormPagamento(Integer.parseInt(JOptionPane.showInputDialog("Forma de pagamento:\n 1-Dinheiro\n 2-Cartão ")), Double.parseDouble(txtTotal.getText()), txtCodcli.getText(), txtCodfun.getText(), vc) ;
         pag.setVisible(true);
     }//GEN-LAST:event_btSalvarActionPerformed
 
     private void btRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRemoverActionPerformed
         // TODO add your handling code here:
-        double valorItem = Double.parseDouble((String)table.getValueAt(table.getSelectedRow(),4));
+        double valorItem = Double.parseDouble((String)table.getValueAt(table.getSelectedRow(),3));
         total = total - valorItem;
-        table.remove(table.getSelectedRow());
+        dtm.removeRow(table.getSelectedRow());
+        vc.remove(table.getSelectedRow());
         txtTotal.setText(String.valueOf(total));
     }//GEN-LAST:event_btRemoverActionPerformed
+
+    private void txtCodcliFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCodcliFocusLost
+        // TODO add your handling code here:
+         try {
+            conexaoBD();
+            String sql = "SELECT * from cliente where CodCliente = " + txtCodcli.getText();
+            stm = conexao.createStatement();
+            rs = stm.executeQuery(sql);
+            if(!rs.next() && !txtCodcli.getText().equals("0"))JOptionPane.showMessageDialog(null, "Codigo do cliente invalido!");
+            conexao.close();
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+       
+    }//GEN-LAST:event_txtCodcliFocusLost
+
+    private void txtCodfunFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCodfunFocusLost
+        // TODO add your handling code here:
+        try {
+            conexaoBD();
+            String sql = "SELECT * from funcionario where Matricula = " + txtCodfun.getText();
+            stm = conexao.createStatement();
+            rs = stm.executeQuery(sql);
+            if(!rs.next() && !txtCodfun.getText().equals("0"))JOptionPane.showMessageDialog(null, "Codigo do funcionario invalido!");
+            conexao.close();
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }               
+    }//GEN-LAST:event_txtCodfunFocusLost
+
+    private void btClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btClienteActionPerformed
+        // TODO add your handling code here:
+        FormNovoCliente cliente = new FormNovoCliente();
+        cliente.setVisible(true);
+    }//GEN-LAST:event_btClienteActionPerformed
 
     /**
      * Esse metodo monta a a tabela onde serão adicionados os produtos 
@@ -160,8 +282,8 @@ public class FormVenda extends javax.swing.JFrame {
                     tableMode1.addColumn("Quantidade");
                     tableMode1.addColumn("Valor Unt.");
                 table = new JTable(tableMode1);
-                DefaultTableModel dtm= (DefaultTableModel) table.getModel();
-
+                dtm= (DefaultTableModel) table.getModel();
+                
             }catch(Exception ee){
                 System.out.println("Erro ao montar tabela!--"+ee);
             }
@@ -180,13 +302,39 @@ public class FormVenda extends javax.swing.JFrame {
        btRemover.setEnabled(true);
     }
 
+    /**
+     *
+     */
+    public void conexaoBD(){
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            
+        } catch (ClassNotFoundException ex) {
+            System.out.println(ex);
+        }
+      
+        try{
+            
+            String strCon = "jdbc:mysql://"+servidor+":"+porta+"/"+nomeBanco;
+            conexao = DriverManager.getConnection(strCon, usuario, senha);
+        }
+        catch(Exception ee){
+            System.out.println(ee);
+            
+        }
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btAdicionar;
+    private javax.swing.JButton btCliente;
     private javax.swing.JButton btRemover;
     private javax.swing.JButton btSalvar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane spLista;
+    private javax.swing.JTextField txtCodcli;
+    private javax.swing.JTextField txtCodfun;
     private javax.swing.JTextField txtCodigo;
     private javax.swing.JTextField txtTotal;
     // End of variables declaration//GEN-END:variables

@@ -25,50 +25,89 @@ public class LivroVO {
     private int cod;
     private int quantidade;
 
-
-
+    /**
+     *
+     * @return
+     */
     public double getPrecoVenda() {
         return precoVenda;
     }
 
+    /**
+     *
+     * @param precoVenda
+     */
     public void setPrecoVenda(double precoVenda) {
         this.precoVenda = precoVenda;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getIsbn() {
         return isbn;
     }
 
+    /**
+     *
+     * @param isbn
+     */
     public void setIsbn(String isbn) {
         this.isbn = isbn;
     }
 
-
+    /**
+     *
+     * @return
+     */
     public String getEditora() {
         return editora;
     }
 
+    /**
+     *
+     * @param editora
+     */
     public void setEditora(String editora) {
         this.editora = editora;
     }
 
-
+    /**
+     *
+     * @return
+     */
     public String getCategoria() {
         return categoria;
     }
 
+    /**
+     *
+     * @param categoria
+     */
     public void setCategoria(String categoria) {
         this.categoria = categoria;
     }
 
+    /**
+     *
+     */
     public LivroVO(){
         
     }
 
+    /**
+     *
+     * @return
+     */
     public int getCod() {
         return cod;
     }
 
+    /**
+     *
+     * @param cod
+     */
     public void setCod(int cod) {
         this.cod = cod;
     }
