@@ -4,7 +4,7 @@
  */
 package Estoque;
 
-import Estoque.EstoqueVO;
+import Estoque.Estoque;
 import java.sql.SQLException;
 import java.util.List;
 import org.hibernate.SessionFactory;
@@ -15,14 +15,14 @@ import org.hibernate.Session;
  * DAO para o estoque de livros.
  * @author Guilherme
  */
-public class EstoqueDao implements DAO<EstoqueVO>{
+public class EstoqueDao implements DAO<Estoque>{
     SessionFactory sessionFactory;
     
     /**
      * Construtora para iniciar a sessão no hibernarte
      */
     public EstoqueDao(){
-        sessionFactory = new Configuration().addClass(EstoqueVO.class)
+        sessionFactory = new Configuration().addClass(Estoque.class)
                                             .buildSessionFactory();
     }
 
@@ -55,7 +55,7 @@ public class EstoqueDao implements DAO<EstoqueVO>{
  * @throws SQLException 
  */
     @Override
-    public boolean inserir(EstoqueVO obj) throws SQLException {
+    public boolean inserir(Estoque obj) throws SQLException {
        try{
         Session session = sessionFactory.openSession();
         session.saveOrUpdate(obj);
@@ -74,7 +74,7 @@ public class EstoqueDao implements DAO<EstoqueVO>{
      * @throws SQLException 
      */
     @Override
-    public boolean alterar(EstoqueVO obj) throws SQLException {
+    public boolean alterar(Estoque obj) throws SQLException {
         try{
         Session session = sessionFactory.openSession();
         session.saveOrUpdate(obj);
@@ -92,7 +92,7 @@ public class EstoqueDao implements DAO<EstoqueVO>{
  * @throws SQLException 
  */
     @Override
-    public boolean excluir(EstoqueVO obj) throws SQLException {
+    public boolean excluir(Estoque obj) throws SQLException {
         try{
         Session session = sessionFactory.openSession();
         session.delete(obj);
@@ -111,10 +111,10 @@ public class EstoqueDao implements DAO<EstoqueVO>{
      * @throws SQLException 
      */
     @Override
-    public EstoqueVO pesquisar(int pk) throws SQLException {
+    public Estoque pesquisar(int pk) throws SQLException {
         try{
         Session session = sessionFactory.openSession();
-        EstoqueVO estoqueVO = (EstoqueVO)session.get(EstoqueVO.class, pk);
+        Estoque estoqueVO = (Estoque)session.get(Estoque.class, pk);
         session.flush();
         session.close();
         return estoqueVO;

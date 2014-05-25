@@ -145,7 +145,7 @@ public class Manipular extends javax.swing.JFrame {
     private void btConcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btConcluirActionPerformed
         if(validarDados()){
             // faz inserção no banco ...
-            EstoqueVO estoqueVO = new EstoqueVO();
+            Estoque estoqueVO = new Estoque();
             estoqueVO.setCodigo(Integer.valueOf(txtCodigo.getText()));
             estoqueVO.setData(txtData.getText());
             estoqueVO.setFornecedor(txtFornecedor.getText());
