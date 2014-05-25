@@ -5,8 +5,13 @@
 package Estoque;
 
 import static java.awt.image.ImageObserver.WIDTH;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
 
 /**
  *
@@ -15,11 +20,11 @@ import javax.swing.JOptionPane;
 public class InterfaceEstoque extends javax.swing.JFrame {
     String user, pass;
     ArrayList dados = new ArrayList();
-    String [] Colunas = new String[]{"Codigo","Quantidade","Valor","Fornecedor","Data"};
+   // List rec = new List ();
+    String [] colunas = new String[]{"Codigo","Quantidade","Valor","Fornecedor","Data"};
     Manipular manipular = new Manipular ();
-    /**
-     * Creates new form InterfaceEstoque
-     */
+   EstoqueDao estoque = new EstoqueDao();
+   ModeloTabela modelo = new ModeloTabela(dados, colunas);
     
     public InterfaceEstoque() {
         initComponents();
@@ -27,9 +32,22 @@ public class InterfaceEstoque extends javax.swing.JFrame {
         btExcluir.setEnabled(false);
         btInserir.setEnabled(true);
         btConsultar.setEnabled(true);
-        
+        try {
+            dados=(ArrayList) estoque.listar(user);
+       } catch (SQLException ex) {
+           JOptionPane.showMessageDialog(null,"ERRO : " + ex);
+       }
+       
     }
-//novo teste do git
+    
+    public void preencheTabela(){
+      int n=dados.size();
+      tbDados.setModel(modelo);
+       
+    }
+  public void verificaTabela (){
+    //  if(tbDados.get)
+  }
     
 //   teste do teste do git
     public boolean check (){

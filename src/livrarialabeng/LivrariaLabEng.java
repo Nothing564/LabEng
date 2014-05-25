@@ -6,6 +6,7 @@
 
 package livrarialabeng;
 
+import Estoque.InterfaceEstoque;
 import Vendas.FormVenda;
 
 /**
@@ -20,7 +21,9 @@ public class LivrariaLabEng {
     public static void main(String[] args) {
         // TODO code application logic here
         FormVenda venda = new FormVenda();
-        venda.setVisible(true);
+        //venda.setVisible(true);
+        InterfaceEstoque in = new InterfaceEstoque();
+        in.setVisible(true);
     }
     
 }
