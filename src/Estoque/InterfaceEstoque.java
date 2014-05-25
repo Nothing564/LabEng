@@ -30,6 +30,7 @@ public class InterfaceEstoque extends javax.swing.JFrame {
         
     }
 
+//   teste do teste do git
     public boolean check (){
         user =JOptionPane.showInputDialog("Usuário: ");
         pass=JOptionPane.showInputDialog("Senha: ");
