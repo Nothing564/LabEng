@@ -29,7 +29,8 @@ public class InterfaceEstoque extends javax.swing.JFrame {
         btConsultar.setEnabled(true);
         
     }
-
+//novo teste do git
+    
 //   teste do teste do git
     public boolean check (){
         user =JOptionPane.showInputDialog("Usuário: ");
