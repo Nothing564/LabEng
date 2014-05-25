@@ -4,7 +4,6 @@
  */
 package Estoque;
 
-import Estoque.Estoque;
 import java.sql.SQLException;
 import java.util.List;
 import org.hibernate.SessionFactory;
@@ -22,7 +21,10 @@ public class EstoqueDao implements DAO<Estoque>{
      * Construtora para iniciar a sessão no hibernarte
      */
     public EstoqueDao(){
-        sessionFactory = new Configuration().addClass(Estoque.class)
+        Configuration configuration = new Configuration();
+        configuration.addResource("Estoque");
+        sessionFactory = configuration
+//                                            .addClass(Estoque.class)
                                             .buildSessionFactory();
     }
 
