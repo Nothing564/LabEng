@@ -1,15 +1,15 @@
 Hora: 15:40 ->>>> { 
-  Necessário fazer Insert, update e delete na classe manipular onde dexei comentado pois não sei direito mexer no hibernate =/ ...
+  Necessï¿½rio fazer Insert, update e delete na classe manipular onde dexei comentado pois nï¿½o sei direito mexer no hibernate =/ ...
 criei a classe Modelo Tabela para ficar mais facil manipular os dados do JTable.
-
+asdfasdf
 }
 
 
 Hora: 16:00 ->>> {
 
-estou pensando em fazer o seguinte. Puxar os dados no JTable com o botão "consultar" e aparecerão os registros. Ao clicar em algum os botões inserir e excluir vao para enable (true)  e ao clicar abre a tela Manipular. 
-O botão inserir TAMBEM abre a tela manipular. 
+estou pensando em fazer o seguinte. Puxar os dados no JTable com o botï¿½o "consultar" e aparecerï¿½o os registros. Ao clicar em algum os botï¿½es inserir e excluir vao para enable (true)  e ao clicar abre a tela Manipular. 
+O botï¿½o inserir TAMBEM abre a tela manipular. 
 Criei a tabela estoque no banco, segue script no projeto. 
-Estou para fazer agora a parte de puxar os dados do banco no JTable, não sei bem como fazer os Cruds com o hibernate
+Estou para fazer agora a parte de puxar os dados do banco no JTable, nï¿½o sei bem como fazer os Cruds com o hibernate
 
 }
