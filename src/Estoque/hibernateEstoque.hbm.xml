@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="Estoque.EstoqueVO" table="estoque"/>
+  <id name="codigo" type="integer">
+            <column name="Codigo"/>
+        </id>
+        <property name="quantidade" type="integer">
+      <column length="45" name="Quantidade" not-null="true"/>
+    </property>
+    <property name="valor" type="float">
+      <column length="45" name="Valor" not-null="true"/>
+    </property>
+    <property name="fornecedor" type="string">
+      <column length="45" name="Fornecedor" not-null="true"/>
+    </property>
+    <property name="data" type="string">
+      <column length="45" name="data" not-null="true"/>
+    </property>
+</hibernate-mapping>
