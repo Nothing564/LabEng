@@ -4,7 +4,7 @@
  */
 package Estoque;
 
-import Livro.LivroVO;
+import Estoque.EstoqueVO;
 import java.sql.SQLException;
 import java.util.List;
 import org.hibernate.SessionFactory;
@@ -15,14 +15,14 @@ import org.hibernate.Session;
  * DAO para o estoque de livros.
  * @author Guilherme
  */
-public class EstoqueDao implements DAO<LivroVO>{
+public class EstoqueDao implements DAO<EstoqueVO>{
     SessionFactory sessionFactory;
     
     /**
      * Construtora para iniciar a sessão no hibernarte
      */
     public EstoqueDao(){
-        sessionFactory = new Configuration().addClass(LivroVO.class)
+        sessionFactory = new Configuration().addClass(EstoqueVO.class)
                                             .buildSessionFactory();
     }
 
@@ -55,7 +55,7 @@ public class EstoqueDao implements DAO<LivroVO>{
  * @throws SQLException 
  */
     @Override
-    public boolean inserir(LivroVO obj) throws SQLException {
+    public boolean inserir(EstoqueVO obj) throws SQLException {
        try{
         Session session = sessionFactory.openSession();
         session.saveOrUpdate(obj);
@@ -74,7 +74,7 @@ public class EstoqueDao implements DAO<LivroVO>{
      * @throws SQLException 
      */
     @Override
-    public boolean alterar(LivroVO obj) throws SQLException {
+    public boolean alterar(EstoqueVO obj) throws SQLException {
         try{
         Session session = sessionFactory.openSession();
         session.saveOrUpdate(obj);
@@ -92,7 +92,7 @@ public class EstoqueDao implements DAO<LivroVO>{
  * @throws SQLException 
  */
     @Override
-    public boolean excluir(LivroVO obj) throws SQLException {
+    public boolean excluir(EstoqueVO obj) throws SQLException {
         try{
         Session session = sessionFactory.openSession();
         session.delete(obj);
@@ -111,13 +111,13 @@ public class EstoqueDao implements DAO<LivroVO>{
      * @throws SQLException 
      */
     @Override
-    public LivroVO pesquisar(int pk) throws SQLException {
+    public EstoqueVO pesquisar(int pk) throws SQLException {
         try{
         Session session = sessionFactory.openSession();
-        LivroVO livroVO = (LivroVO)session.get(LivroVO.class, pk);
+        EstoqueVO estoqueVO = (EstoqueVO)session.get(EstoqueVO.class, pk);
         session.flush();
         session.close();
-        return livroVO;
+        return estoqueVO;
         }catch(Throwable  e){
        throw new SQLException("Erro na classe EstoqueDao: " + e.getCause());
         }
