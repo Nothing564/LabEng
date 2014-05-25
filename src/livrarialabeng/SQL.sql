@@ -38,6 +38,30 @@ CREATE TABLE IF NOT EXISTS `cliente` (
 
 -- --------------------------------------------------------
 
+
+
+--
+-- Estrutura da tabela `estoque`
+--
+
+CREATE TABLE IF NOT EXISTS `estoque` (
+  `Codigo` int(4) NOT NULL,
+  `Quantidade` int(4) NOT NULL,
+  `Valor` float NOT NULL,
+  `Fornecedor` varchar(30) NOT NULL,
+  `data` varchar(30) NOT NULL,
+  PRIMARY KEY (`Codigo`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `estoque`
+--
+
+INSERT INTO `estoque` (`Codigo`, `Quantidade`, `Valor`, `Fornecedor`, `data`) VALUES
+(1, 10, 15, 'teste', '12122012');
+
+-- --------------------------------------------------------
+
 --
 -- Estrutura da tabela `fornecedor`
 --
