@@ -4,6 +4,9 @@
  */
 package Estoque;
 
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -142,6 +145,18 @@ public class Manipular extends javax.swing.JFrame {
     private void btConcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btConcluirActionPerformed
         if(validarDados()){
             // faz inserção no banco ...
+            EstoqueVO estoqueVO = new EstoqueVO();
+            estoqueVO.setCodigo(Integer.valueOf(txtCodigo.getText()));
+            estoqueVO.setData(txtData.getText());
+            estoqueVO.setFornecedor(txtFornecedor.getText());
+            estoqueVO.setQuantidade(Integer.parseInt(txtQuantidade.getText()));
+            estoqueVO.setValor(Float.valueOf(txtValor.getText()));
+            try {
+                new EstoqueDao().inserir(estoqueVO);
+            } catch (SQLException ex) {
+                Logger.getLogger(Manipular.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
             JOptionPane.showMessageDialog(rootPane, "Dados Inseridos Com Sucesso", "Mensagem Ao Usuario", 1);
         } else{
             JOptionPane.showMessageDialog(rootPane, "Preencha Todos Os Campos!", "Mensagem Ao Usuario", 2);
