@@ -152,7 +152,7 @@ public class Manipular extends javax.swing.JFrame {
             estoqueVO.setQuantidade(Integer.parseInt(txtQuantidade.getText()));
             estoqueVO.setValor(Float.valueOf(txtValor.getText()));
             try {
-                new EstoqueDao().inserir(estoqueVO);
+                new DaoEstoque().inserir(estoqueVO);
             } catch (SQLException ex) {
                 Logger.getLogger(Manipular.class.getName()).log(Level.SEVERE, null, ex);
             }

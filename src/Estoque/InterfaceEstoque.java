@@ -96,15 +96,18 @@ public class InterfaceEstoque extends javax.swing.JFrame {
   }
     
 //   teste do teste do git
-    public boolean check (){
-        user =JOptionPane.showInputDialog("Usuário: ");
+    public int check (){
+        user=JOptionPane.showInputDialog("Usuário: ");
         pass=JOptionPane.showInputDialog("Senha: ");
+        if(user.equalsIgnoreCase(null) || pass.equalsIgnoreCase(null)){
+            return 0;
+        }
         if(pass.contentEquals("admin") && user.contentEquals("adm")){
             JOptionPane.showMessageDialog(rootPane, "Acesso Permitido", "Autenticação", 2);
-            return true;
+            return 1;
         } else{
           //  JOptionPane.showMessageDialog(rootPane, "Acesso Negado", "Erro Na Autenticação", 1);
-            return false;
+            return 2;
         }
     }
     
@@ -213,12 +216,14 @@ public class InterfaceEstoque extends javax.swing.JFrame {
 
     private void btInserirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btInserirActionPerformed
         
-        boolean retorno;
+        int retorno;
         retorno=check();
-        if(retorno==true)
+        if(retorno==1)
         manipular.setVisible(true);
-        else
-         JOptionPane.showMessageDialog(rootPane, "Somente Usuários Autorizados", "Acesso Negado", 1);   
+        if(retorno==2)
+         JOptionPane.showMessageDialog(rootPane, "Somente Usuários Autorizados", "Acesso Negado", 1); 
+        if(retorno==0)
+            JOptionPane.showMessageDialog(rootPane, "Operação Cancelada", "Acesso Negado", 1);
     }//GEN-LAST:event_btInserirActionPerformed
 
     private void btConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btConsultarActionPerformed
