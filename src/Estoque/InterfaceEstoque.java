@@ -12,6 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -44,52 +45,76 @@ public class InterfaceEstoque extends javax.swing.JFrame {
     }
     
     public void preencheTabela(String sql){
+        int codigo , qtd;
+        int i=0;
+        float valor;
+        String forn, data;
      banco.abrir();
        banco.executaSQL(sql);
-           try {
-          banco.getRs().first();
-      } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null,"ERRO2 : " + ex);
-      }
-      try {
-         do{
-             dados.add(new Object[] {banco.getRs().getInt("Codigo"),banco.getRs().getInt("Quantidade"),banco.getRs().getFloat("Valor"),banco.getRs().getString("Fornecedor"),banco.getRs().getString("data")});
-          }while(banco.getRs().next());
-      } catch (SQLException ex) {
-          JOptionPane.showMessageDialog(null,"ERRO3 : " + ex);
-      }
-       
+        System.out.println("Aqui1");
+        
+        DefaultTableModel modelo = new DefaultTableModel();  
          
-        ModeloTabela modelo = new ModeloTabela(dados,colunas);
         tbDados.setModel(modelo);
-
-       
-       tbDados.setModel(modelo);
-
-       /*
-       
-       tbDados.getColumnModel().getColumn(0).setPreferredWidth(40);
-       tbDados.getColumnModel().getColumn(0).setResizable(false);
-       tbDados.getColumnModel().getColumn(1).setPreferredWidth(155);
-       tbDados.getColumnModel().getColumn(1).setResizable(false);
-       tbDados.getColumnModel().getColumn(2).setPreferredWidth(160);
-       tbDados.getColumnModel().getColumn(2).setResizable(false);
-       
-        tbDados.getColumnModel().getColumn(3).setPreferredWidth(100);
-       tbDados.getColumnModel().getColumn(3).setResizable(false);
-       
-        tbDados.getColumnModel().getColumn(4).setPreferredWidth(95);
-       tbDados.getColumnModel().getColumn(4).setResizable(false);
-       
-        tbDados.getColumnModel().getColumn(5).setPreferredWidth(85);
-       tbDados.getColumnModel().getColumn(5).setResizable(false);
-       
-       
-       tbDados.getTableHeader().setReorderingAllowed(false);
-       tbDados.setAutoResizeMode(tbDados.AUTO_RESIZE_OFF);
-       tbDados.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-       * 
-       * */
+        try {
+            while(banco.getRs().next()){
+                codigo=banco.getRs().getInt("Codigo");
+                qtd=banco.getRs().getInt("Quantidade");
+                valor=banco.getRs().getFloat("Valor");
+                forn=banco.getRs().getString("Fornecedor");
+                data=banco.getRs().getString("data");
+                System.out.println("Entrou: " + i);
+                i++;
+            }
+            /*try {
+              banco.getRs().first();
+              System.out.println("Aqui2");
+          } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null,"ERRO2 : " + ex);
+                System.out.println("Aqui3");
+          }
+          try {
+             do{
+                 dados.add(new Object[] {banco.getRs().getInt("Codigo"),banco.getRs().getInt("Quantidade"),banco.getRs().getFloat("Valor"),banco.getRs().getString("Fornecedor"),banco.getRs().getString("data")});
+              }while(banco.getRs().next());
+          } catch (SQLException ex) {
+              JOptionPane.showMessageDialog(null,"ERRO3 : " + ex);
+          }
+           
+             
+            ModeloTabela modelo = new ModeloTabela(dados,colunas);
+            System.out.println("Aqui14");
+            tbDados.setModel(modelo);
+            System.out.println("Aqui15");
+            * 
+            */
+           /*
+           
+           tbDados.getColumnModel().getColumn(0).setPreferredWidth(40);
+           tbDados.getColumnModel().getColumn(0).setResizable(false);
+           tbDados.getColumnModel().getColumn(1).setPreferredWidth(155);
+           tbDados.getColumnModel().getColumn(1).setResizable(false);
+           tbDados.getColumnModel().getColumn(2).setPreferredWidth(160);
+           tbDados.getColumnModel().getColumn(2).setResizable(false);
+           
+            tbDados.getColumnModel().getColumn(3).setPreferredWidth(100);
+           tbDados.getColumnModel().getColumn(3).setResizable(false);
+           
+            tbDados.getColumnModel().getColumn(4).setPreferredWidth(95);
+           tbDados.getColumnModel().getColumn(4).setResizable(false);
+           
+            tbDados.getColumnModel().getColumn(5).setPreferredWidth(85);
+           tbDados.getColumnModel().getColumn(5).setResizable(false);
+           
+           
+           tbDados.getTableHeader().setReorderingAllowed(false);
+           tbDados.setAutoResizeMode(tbDados.AUTO_RESIZE_OFF);
+           tbDados.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+           * 
+           * */
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null,"ERRO : " + ex);
+        }
     }
   public void verificaTabela (){
     //  if(tbDados.get)
