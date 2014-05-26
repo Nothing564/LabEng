@@ -73,52 +73,7 @@ public class InterfaceEstoque extends javax.swing.JFrame {
                 System.out.println("Entrou: " + i);
                 i++;
             }
-            /*try {
-              banco.getRs().first();
-              System.out.println("Aqui2");
-          } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null,"ERRO2 : " + ex);
-                System.out.println("Aqui3");
-          }
-          try {
-             do{
-                 dados.add(new Object[] {banco.getRs().getInt("Codigo"),banco.getRs().getInt("Quantidade"),banco.getRs().getFloat("Valor"),banco.getRs().getString("Fornecedor"),banco.getRs().getString("data")});
-              }while(banco.getRs().next());
-          } catch (SQLException ex) {
-              JOptionPane.showMessageDialog(null,"ERRO3 : " + ex);
-          }
-           
-             
-            ModeloTabela modelo = new ModeloTabela(dados,colunas);
-            System.out.println("Aqui14");
-            tbDados.setModel(modelo);
-            System.out.println("Aqui15");
-            * 
-            */
-           /*
-           
-           tbDados.getColumnModel().getColumn(0).setPreferredWidth(40);
-           tbDados.getColumnModel().getColumn(0).setResizable(false);
-           tbDados.getColumnModel().getColumn(1).setPreferredWidth(155);
-           tbDados.getColumnModel().getColumn(1).setResizable(false);
-           tbDados.getColumnModel().getColumn(2).setPreferredWidth(160);
-           tbDados.getColumnModel().getColumn(2).setResizable(false);
-           
-            tbDados.getColumnModel().getColumn(3).setPreferredWidth(100);
-           tbDados.getColumnModel().getColumn(3).setResizable(false);
-           
-            tbDados.getColumnModel().getColumn(4).setPreferredWidth(95);
-           tbDados.getColumnModel().getColumn(4).setResizable(false);
-           
-            tbDados.getColumnModel().getColumn(5).setPreferredWidth(85);
-           tbDados.getColumnModel().getColumn(5).setResizable(false);
-           
-           
-           tbDados.getTableHeader().setReorderingAllowed(false);
-           tbDados.setAutoResizeMode(tbDados.AUTO_RESIZE_OFF);
-           tbDados.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-           * 
-           * */
+          
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null,"ERRO : " + ex);
         }
@@ -180,6 +135,11 @@ public class InterfaceEstoque extends javax.swing.JFrame {
             }
         });
         tbDados.setColumnSelectionAllowed(true);
+        tbDados.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbDadosMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tbDados);
         tbDados.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 
@@ -201,8 +161,18 @@ public class InterfaceEstoque extends javax.swing.JFrame {
         });
 
         btAlterar.setText("Alterar");
+        btAlterar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btAlterarActionPerformed(evt);
+            }
+        });
 
         btExcluir.setText("Excluir");
+        btExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btExcluirActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -263,6 +233,22 @@ public class InterfaceEstoque extends javax.swing.JFrame {
         preencheTabela("select * from estoque");
 
     }//GEN-LAST:event_btConsultarActionPerformed
+
+    private void tbDadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbDadosMouseClicked
+        btAlterar.setEnabled(true);
+        btExcluir.setEnabled(true);
+        
+    }//GEN-LAST:event_tbDadosMouseClicked
+
+    private void btAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAlterarActionPerformed
+       manipular.setVisible(true);
+       manipular.setPk((int) tbDados.getValueAt(tbDados.getSelectedRow(), 0));
+    }//GEN-LAST:event_btAlterarActionPerformed
+
+    private void btExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btExcluirActionPerformed
+        manipular.setVisible(true);
+        manipular.setPk(tbDados.getSelectedRow());
+    }//GEN-LAST:event_btExcluirActionPerformed
 
     /**
      * @param args the command line arguments
