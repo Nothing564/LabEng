@@ -57,7 +57,7 @@ public class InterfaceEstoque extends javax.swing.JFrame {
         float valor;
         String forn, data;
         banco.abrir();
-       banco.executaSQL(sql);
+        banco.executaSQL(sql);
         
       
         
@@ -95,6 +95,10 @@ public class InterfaceEstoque extends javax.swing.JFrame {
           //  JOptionPane.showMessageDialog(rootPane, "Acesso Negado", "Erro Na Autenticação", 1);
             return 2;
         }
+    }
+    public void atualizarTabela(){
+        modelo.setRowCount(0);
+          preencheTabela("select * from estoque");
     }
     
     /**
@@ -230,6 +234,7 @@ public class InterfaceEstoque extends javax.swing.JFrame {
     }//GEN-LAST:event_btInserirActionPerformed
 
     private void btConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btConsultarActionPerformed
+        
         preencheTabela("select * from estoque");
 
     }//GEN-LAST:event_btConsultarActionPerformed
@@ -241,12 +246,12 @@ public class InterfaceEstoque extends javax.swing.JFrame {
     }//GEN-LAST:event_tbDadosMouseClicked
 
     private void btAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAlterarActionPerformed
-       /*
-       manipular.setVisible(true);
-       manipular.setOp(1);
-       manipular.setPk((int) tbDados.getValueAt(tbDados.getSelectedRow(), 0));
-       */
-         DaoEstoque daoEstoque = new DaoEstoque();
+
+    
+       int retorno;
+        retorno=check();
+        if(retorno==1){
+          DaoEstoque daoEstoque = new DaoEstoque();
         Estoque estoque = new Estoque();
       
         estoque.setCodigo((int) tbDados.getValueAt(tbDados.getSelectedRow(), 0));
@@ -255,28 +260,52 @@ public class InterfaceEstoque extends javax.swing.JFrame {
         estoque.setFornecedor((String) tbDados.getValueAt(tbDados.getSelectedRow(), 3));
         estoque.setData((String) tbDados.getValueAt(tbDados.getSelectedRow(), 4));
         try {
+
             if(daoEstoque.alterar(estoque))
                 System.out.println("Alterado");
+            daoEstoque.alterar(estoque);
+            JOptionPane.showMessageDialog(rootPane, "Dados Alterados Com Sucesso!", "Mensagem", 1);
+             atualizarTabela();
+
         } catch (SQLException ex) {
-            Logger.getLogger(InterfaceEstoque.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Erro" );
         }
+        }
+        if(retorno==2)
+         JOptionPane.showMessageDialog(rootPane, "Somente Usuários Autorizados", "Acesso Negado", 2); 
+        if(retorno==0)
+            JOptionPane.showMessageDialog(rootPane, "Operação Cancelada", "Acesso Negado", 1);
+
+   
+         
         
+
     }//GEN-LAST:event_btAlterarActionPerformed
 
     private void btExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btExcluirActionPerformed
-        /*
-        manipular.setVisible(true);
-        manipular.setOp(2);
-        manipular.setPk(tbDados.getSelectedRow());
-        */
+
+      int retorno;
+        retorno=check();
+        if(retorno==1){
+
+
         DaoEstoque daoEstoque = new DaoEstoque();
         Estoque estoque = new Estoque();
         estoque.setCodigo((int) tbDados.getValueAt(tbDados.getSelectedRow(), 0));
         try {
             daoEstoque.excluir(estoque);
+             JOptionPane.showMessageDialog(rootPane, "Dados Excluidos Com Sucesso!", "Mensagem", 1);
+             atualizarTabela();
         } catch (SQLException ex) {
-            Logger.getLogger(InterfaceEstoque.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(rootPane, "Erro Na Exclusão", "Mensagem", 1);
         }
+        }
+        if(retorno==2)
+         JOptionPane.showMessageDialog(rootPane, "Somente Usuários Autorizados", "Acesso Negado", 2); 
+        if(retorno==0)
+            JOptionPane.showMessageDialog(rootPane, "Operação Cancelada", "Acesso Negado", 1);
+        
+       
         
     }//GEN-LAST:event_btExcluirActionPerformed
 
