@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
@@ -248,12 +249,13 @@ public class InterfaceEstoque extends javax.swing.JFrame {
          DaoEstoque daoEstoque = new DaoEstoque();
         Estoque estoque = new Estoque();
         estoque.setCodigo((int) tbDados.getValueAt(tbDados.getSelectedRow(), 0));
-        estoque.setQuantidade((int) tbDados.getValueAt(tbDados.getSelectedRow(), 1));
+        estoque.setQuantidade((Integer)tbDados.getValueAt(tbDados.getSelectedRow(), 1));
         estoque.setValor((float) tbDados.getValueAt(tbDados.getSelectedRow(), 2));
         estoque.setFornecedor((String) tbDados.getValueAt(tbDados.getSelectedRow(), 3));
         estoque.setData((String) tbDados.getValueAt(tbDados.getSelectedRow(), 4));
         try {
-            daoEstoque.alterar(estoque);
+            if(daoEstoque.alterar(estoque))
+                System.out.println("Alterado");;
         } catch (SQLException ex) {
             Logger.getLogger(InterfaceEstoque.class.getName()).log(Level.SEVERE, null, ex);
         }
