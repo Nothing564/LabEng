@@ -25,7 +25,7 @@ public class InterfaceEstoque extends javax.swing.JFrame {
     Banco banco = new Banco("root","","localhost","livrarialabeng",3306);
     Manipular manipular = new Manipular ();
    DaoEstoque estoque = new DaoEstoque();
- //  ModeloTabela modelo = new ModeloTabela(dados, colunas);
+   ModeloTabela modelo = new ModeloTabela(dados, colunas);
     
     public InterfaceEstoque() {
         initComponents();
@@ -48,37 +48,14 @@ public class InterfaceEstoque extends javax.swing.JFrame {
        
     }
     
-
     public void preencheTabela(){
-//      int n = dados.size();
-      tbDados.setModel(new ModeloTabela(dados, colunas));
-    }
-    
-    public void preencheTabela(String SQL){
       int n=dados.size();
       
 
-       
-       
-       banco.executaSQL(SQL);
-          try {
-          banco.getRs().first();
-      } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null,"ERRO : " + ex);
-      }
-      try {
-          do{
-              dados.add(new Object[] {banco.getRs().getInt("Codigo"),banco.getRs().getInt("Quantidade"),banco.getRs().getFloat("Valor"),banco.getRs().getString("Fornecedor"),banco.getRs().getString("data")});
-          }while(banco.getRs().next());
-      } catch (SQLException ex) {
-          JOptionPane.showMessageDialog(null,"ERRO : " + ex);
-      }
-       
-       
-        ModeloTabela modelo = new ModeloTabela(dados,colunas);
-        tbDados.setModel(modelo);
+       sql="select * from estoque";
+
        /*
-       
+       tbDados.setModel(modelo);
        tbDados.getColumnModel().getColumn(0).setPreferredWidth(40);
        tbDados.getColumnModel().getColumn(0).setResizable(false);
        tbDados.getColumnModel().getColumn(1).setPreferredWidth(155);
@@ -233,7 +210,7 @@ public class InterfaceEstoque extends javax.swing.JFrame {
     }//GEN-LAST:event_btInserirActionPerformed
 
     private void btConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btConsultarActionPerformed
-        preencheTabela("select * from estoque");
+        preencheTabela();
     }//GEN-LAST:event_btConsultarActionPerformed
 
     /**

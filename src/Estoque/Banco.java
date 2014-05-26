@@ -34,7 +34,6 @@ public class Banco {
     
     
     
-    
     /*********************CONSTRUTORES*********************/
 
     public Banco(String usuario, String senha, String servidor, String banco, int porta) {
@@ -84,33 +83,6 @@ public class Banco {
             ex.printStackTrace();
         }
     }
-    
-    public void executaSQL(String sql) {
-        try {       
-            stm = conexao.createStatement();
-        } catch (SQLException ex) {
-        JOptionPane.showMessageDialog(null,"Erro no BancoFactory \nERRO: " + ex );
-        }
-        try {
-            rs = stm.executeQuery(sql);
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null,"Erro no BancoFactory \nERRO: " + ex );
-        }
-    }
-    
-    /****************GETTER E SETTER *************************/
-
-    public String getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(String usuario) {
-        this.usuario = usuario;
-    }
-
-    public String getSenha() {
-        return senha;
-    }
 
     public Statement getStm() {
         return stm;
@@ -128,7 +100,35 @@ public class Banco {
         this.rs = rs;
     }
     
+
     
+    public void executaSQL(String sql) {
+        try {       
+            stm = conexao.createStatement();
+        } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(null,"Erro no BancoFactory \nERRO: " + ex );
+        }
+        try {
+            rs = stm.executeQuery(sql);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null,"Erro no BancoFactory \nERRO: " + ex );
+        }
+    }
+
+    
+    /****************GETTER E SETTER *************************/
+
+    public String getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
 
     public void setSenha(String senha) {
         this.senha = senha;
