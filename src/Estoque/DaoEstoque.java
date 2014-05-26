@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
@@ -23,7 +24,10 @@ public class DaoEstoque implements DAO {
     ResultSet rs = null;
     String sql = null;
     
-
+    public DaoEstoque(){
+        banco = new Banco("root", "", "localhost", "livrarialabeng", 3306);
+        
+    }
 
     @Override
     public boolean inserir(Object obj) throws SQLException {
@@ -124,7 +128,7 @@ public class DaoEstoque implements DAO {
     @Override
     public List listar(String criterio) throws SQLException {
         Estoque cli = null;
-        Vector lista = new Vector <Estoque>();
+        List lista = new ArrayList<Estoque>();
         if(criterio == null){
             sql= "SELECT * FROM estoque";
             } else{
