@@ -99,7 +99,8 @@ public class InterfaceEstoque extends javax.swing.JFrame {
     public int check (){
         user=JOptionPane.showInputDialog("Usuário: ");
         pass=JOptionPane.showInputDialog("Senha: ");
-        if(user.equalsIgnoreCase(null) || pass.equalsIgnoreCase(null)){
+        if(user==null || pass==null){
+            
             return 0;
         }
         if(pass.contentEquals("admin") && user.contentEquals("adm")){
@@ -221,7 +222,7 @@ public class InterfaceEstoque extends javax.swing.JFrame {
         if(retorno==1)
         manipular.setVisible(true);
         if(retorno==2)
-         JOptionPane.showMessageDialog(rootPane, "Somente Usuários Autorizados", "Acesso Negado", 1); 
+         JOptionPane.showMessageDialog(rootPane, "Somente Usuários Autorizados", "Acesso Negado", 2); 
         if(retorno==0)
             JOptionPane.showMessageDialog(rootPane, "Operação Cancelada", "Acesso Negado", 1);
     }//GEN-LAST:event_btInserirActionPerformed
