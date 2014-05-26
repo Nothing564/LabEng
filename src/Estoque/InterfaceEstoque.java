@@ -53,7 +53,7 @@ public class InterfaceEstoque extends javax.swing.JFrame {
     public boolean check (){
         user =JOptionPane.showInputDialog("Usuário: ");
         pass=JOptionPane.showInputDialog("Senha: ");
-        if(pass=="admin" && user=="adm"){
+        if(pass.contentEquals("admin") && user.contentEquals("adm")){
             JOptionPane.showMessageDialog(rootPane, "Acesso Permitido", "Autenticação", 2);
             return true;
         } else{
