@@ -36,7 +36,7 @@ public class InterfaceEstoque extends javax.swing.JFrame {
         try {
 
             dados=(ArrayList) estoque.listar(null);
-
+            System.out.println(dados.get(0).toString());
        } catch (SQLException ex) {
            JOptionPane.showMessageDialog(null,"ERRO : " + ex);
        }
@@ -99,7 +99,7 @@ public class InterfaceEstoque extends javax.swing.JFrame {
     public boolean check (){
         user =JOptionPane.showInputDialog("Usuário: ");
         pass=JOptionPane.showInputDialog("Senha: ");
-        if(pass.contentEquals("admin") && user.contentEquals("adm")){
+        if(pass == "admin" && user =="adm"){
             JOptionPane.showMessageDialog(rootPane, "Acesso Permitido", "Autenticação", 2);
             return true;
         } else{
