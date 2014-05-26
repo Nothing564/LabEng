@@ -97,7 +97,7 @@ public class InterfaceEstoque extends javax.swing.JFrame {
         }
     }
     public void atualizarTabela(){
-        modelo.setRowCount(0);
+          modelo.setRowCount(0);
           preencheTabela("select * from estoque");
     }
     
@@ -235,7 +235,7 @@ public class InterfaceEstoque extends javax.swing.JFrame {
 
     private void btConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btConsultarActionPerformed
         
-        preencheTabela("select * from estoque");
+        atualizarTabela();
 
     }//GEN-LAST:event_btConsultarActionPerformed
 
@@ -251,13 +251,20 @@ public class InterfaceEstoque extends javax.swing.JFrame {
        int retorno;
         retorno=check();
         if(retorno==1){
-          DaoEstoque daoEstoque = new DaoEstoque();
+        DaoEstoque daoEstoque = new DaoEstoque();
         Estoque estoque = new Estoque();
         estoque.setCodigo((int) tbDados.getValueAt(tbDados.getSelectedRow(), 0));
-        estoque.setQuantidade((Integer)tbDados.getValueAt(tbDados.getSelectedRow(), 1));
-        estoque.setValor((float) tbDados.getValueAt(tbDados.getSelectedRow(), 2));
-        estoque.setFornecedor((String) tbDados.getValueAt(tbDados.getSelectedRow(), 3));
-        estoque.setData((String) tbDados.getValueAt(tbDados.getSelectedRow(), 4));
+           try {
+               /* estoque.setQuantidade((Integer)tbDados.getValueAt(tbDados.getSelectedRow(), 1));
+                estoque.setValor((float) tbDados.getValueAt(tbDados.getSelectedRow(), 2));
+                estoque.setFornecedor((String) tbDados.getValueAt(tbDados.getSelectedRow(), 3));
+                estoque.setData((String) tbDados.getValueAt(tbDados.getSelectedRow(), 4)); 
+                */
+               estoque= (Estoque) daoEstoque.pesquisar(estoque.getCodigo());
+           } catch (SQLException ex) {
+               System.out.println("erro");
+           }
+            System.out.println("codigo:" + estoque.getCodigo());
         try {
             daoEstoque.alterar(estoque);
             JOptionPane.showMessageDialog(rootPane, "Dados Alterados Com Sucesso!", "Mensagem", 1);
