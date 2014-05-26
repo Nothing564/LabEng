@@ -104,6 +104,7 @@ public class Banco {
     
     public void executaSQL(String sql) {
         try {       
+            this.abrir();
             stm = conexao.createStatement();
         } catch (SQLException ex) {
         JOptionPane.showMessageDialog(null,"Erro no BancoFactory \nERRO: " + ex );
