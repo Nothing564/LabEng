@@ -22,6 +22,7 @@ public class DaoEstoque implements DAO {
     Banco banco =null;
     ResultSet rs = null;
     String sql = null;
+    
 
 
     @Override
@@ -122,12 +123,13 @@ public class DaoEstoque implements DAO {
 
     @Override
     public List listar(String criterio) throws SQLException {
-       Estoque cli = null;
+        Estoque cli = null;
         Vector lista = new Vector <Estoque>();
         if(criterio == null){
             sql= "SELECT * FROM estoque";
             } else{
             sql= "SELECT * FROM estoque WHERE = " + criterio;
+            }
             banco.abrir();
             stm = banco.getConexao().createStatement();
             rs = stm.executeQuery(sql);
@@ -143,8 +145,8 @@ public class DaoEstoque implements DAO {
             rs.close();
             banco.fechar();
             return lista;
-        }
-      return null; 
+        
+//      return null; 
     }
     
     

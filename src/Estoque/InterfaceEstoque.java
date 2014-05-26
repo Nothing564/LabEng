@@ -33,7 +33,10 @@ public class InterfaceEstoque extends javax.swing.JFrame {
         btInserir.setEnabled(true);
         btConsultar.setEnabled(true);
         try {
-            dados=(ArrayList) estoque.listar(user);
+            dados=(ArrayList)estoque.listar(user);
+            
+            this.preencheTabela();
+            
        } catch (SQLException ex) {
            JOptionPane.showMessageDialog(null,"ERRO : " + ex);
        }
@@ -41,8 +44,8 @@ public class InterfaceEstoque extends javax.swing.JFrame {
     }
     
     public void preencheTabela(){
-      int n=dados.size();
-      tbDados.setModel(modelo);
+//      int n = dados.size();
+      tbDados.setModel(new ModeloTabela(dados, colunas));
        
     }
   public void verificaTabela (){
