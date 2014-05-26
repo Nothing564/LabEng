@@ -23,7 +23,7 @@ public class InterfaceEstoque extends javax.swing.JFrame {
    // List rec = new List ();
     String [] colunas = new String[]{"Codigo","Quantidade","Valor","Fornecedor","Data"};
     Manipular manipular = new Manipular ();
-   EstoqueDao estoque = new EstoqueDao();
+   DaoEstoque estoque = new DaoEstoque();
    ModeloTabela modelo = new ModeloTabela(dados, colunas);
     
     public InterfaceEstoque() {

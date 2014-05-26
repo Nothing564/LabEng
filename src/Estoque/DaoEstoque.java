@@ -124,7 +124,7 @@ public class DaoEstoque implements DAO {
     public List listar(String criterio) throws SQLException {
        Estoque cli = null;
         Vector lista = new Vector <Estoque>();
-        if(criterio.isEmpty()){
+        if(criterio == null){
             sql= "SELECT * FROM estoque";
             } else{
             sql= "SELECT * FROM estoque WHERE = " + criterio;

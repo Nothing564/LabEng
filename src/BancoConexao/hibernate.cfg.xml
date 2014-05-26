@@ -6,11 +6,10 @@
     <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
     <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/livrarialabeng?zeroDateTimeBehavior=convertToNull</property>
     <property name="hibernate.connection.username">root</property>
-    <!--
     <mapping resource="Livro/hibernate.hbm.xml"/>
-    <mapping resource="Estoque/Estoque.hbm.xml"/>
-    
+    <mapping class="Estoque.Estoque" file="" jar="" package="Estoque" resource="Estoque/Estoque.hbm.xml"/>
+    <!--
     <mapping resource="Estoque/hibernate1.hbm.xml"/>
-    -->
+-->
   </session-factory>
 </hibernate-configuration>

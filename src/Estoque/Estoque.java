@@ -6,11 +6,17 @@
 
 package Estoque;
 
+//import org.hibernate.annotations.Entity;
+//import org.hibernate.annotations.Table;
+import org.hibernate.annotations.*;
+
 /**
  *
  * @author Guilherme
  */
+
 public class Estoque {
+    
     private int codigo;
     private int quantidade; 
     private float valor; 
@@ -20,6 +26,7 @@ public class Estoque {
     /**
      * @return the codigo
      */
+
     public int getCodigo() {
         return codigo;
     }

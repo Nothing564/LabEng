@@ -4,8 +4,11 @@
  */
 package Estoque;
 
+import java.io.File;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.Session;
@@ -21,11 +24,16 @@ public class EstoqueDao implements DAO<Estoque>{
      * Construtora para iniciar a sessão no hibernarte
      */
     public EstoqueDao(){
+        
         Configuration configuration = new Configuration();
-        configuration.addResource("Estoque");
-        sessionFactory = configuration
-//                                            .addClass(Estoque.class)
-                                            .buildSessionFactory();
+//        configuration.addResource("Estoque");
+        
+//        configuration.addFile("Estoque/Estoque.hbm.xml");
+
+            sessionFactory = configuration
+                                          .addClass(Estoque.class)
+                                          .buildSessionFactory();
+
     }
 
 /**
