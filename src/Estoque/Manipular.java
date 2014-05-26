@@ -24,8 +24,8 @@ public class Manipular extends javax.swing.JFrame {
      */
     public Manipular() {
         initComponents();
-        if (pk!=0)
-            this.diferenciar();
+       // if (pk!=0)
+            //this.diferenciar();
     }
 
     /**
@@ -185,7 +185,7 @@ public class Manipular extends javax.swing.JFrame {
             
             JOptionPane.showMessageDialog(rootPane, "Dados Inseridos Com Sucesso", "Mensagem Ao Usuario", 1);
             limparDados();
-            banco.fechar();
+ 
         } else{
             JOptionPane.showMessageDialog(rootPane, "Preencha Todos Os Campos!", "Mensagem Ao Usuario", 2);
         }

@@ -55,8 +55,8 @@ public class InterfaceEstoque extends javax.swing.JFrame {
         int codigo , qtd;
         float valor;
         String forn, data;
-     banco.abrir();
-       banco.executaSQL(sql);
+         banco.abrir();
+         banco.executaSQL(sql);
         
       
          
@@ -229,6 +229,7 @@ public class InterfaceEstoque extends javax.swing.JFrame {
     }//GEN-LAST:event_btInserirActionPerformed
 
     private void btConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btConsultarActionPerformed
+        
         preencheTabela("select * from estoque");
 
     }//GEN-LAST:event_btConsultarActionPerformed
@@ -240,25 +241,40 @@ public class InterfaceEstoque extends javax.swing.JFrame {
     }//GEN-LAST:event_tbDadosMouseClicked
 
     private void btAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAlterarActionPerformed
-       manipular.setVisible(true);
-       manipular.setOp(1);
-       manipular.setPk((int) tbDados.getValueAt(tbDados.getSelectedRow(), 0));
-       
+    
+       int retorno;
+        retorno=check();
+        if(retorno==1){
+          // alterar
+        }
+        if(retorno==2)
+         JOptionPane.showMessageDialog(rootPane, "Somente Usuários Autorizados", "Acesso Negado", 2); 
+        if(retorno==0)
+            JOptionPane.showMessageDialog(rootPane, "Operação Cancelada", "Acesso Negado", 1);
     }//GEN-LAST:event_btAlterarActionPerformed
 
     private void btExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btExcluirActionPerformed
-        manipular.setVisible(true);
-        manipular.setOp(2);
-        manipular.setPk(tbDados.getSelectedRow());
-        
+      int retorno;
+        retorno=check();
+        if(retorno==1){
         DaoEstoque daoEstoque = new DaoEstoque();
         Estoque estoque = new Estoque();
         estoque.setCodigo((int) tbDados.getValueAt(tbDados.getSelectedRow(), 0));
         try {
             daoEstoque.excluir(estoque);
+             JOptionPane.showMessageDialog(rootPane, "Dados Excluidos Com Sucesso!", "Mensagem", 1);
+             tbDados.clearSelection();
+             preencheTabela("select * from estoque");
         } catch (SQLException ex) {
-            Logger.getLogger(InterfaceEstoque.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(rootPane, "Erro Na Exclusão", "Mensagem", 1);
         }
+        }
+        if(retorno==2)
+         JOptionPane.showMessageDialog(rootPane, "Somente Usuários Autorizados", "Acesso Negado", 2); 
+        if(retorno==0)
+            JOptionPane.showMessageDialog(rootPane, "Operação Cancelada", "Acesso Negado", 1);
+        
+       
         
     }//GEN-LAST:event_btExcluirActionPerformed
 
