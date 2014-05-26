@@ -262,7 +262,6 @@ public class InterfaceEstoque extends javax.swing.JFrame {
         try {
 
             if(daoEstoque.alterar(estoque))
-                System.out.println("Alterado");
             daoEstoque.alterar(estoque);
             JOptionPane.showMessageDialog(rootPane, "Dados Alterados Com Sucesso!", "Mensagem", 1);
              atualizarTabela();
