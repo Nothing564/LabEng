@@ -37,6 +37,11 @@ public class Manipular extends javax.swing.JFrame {
     public void diferenciar (){
             try {
                 estoque=(Estoque) estoqueDao.pesquisar(pk);
+                txtCodigo.setText(Integer.toString(estoque.getCodigo()));
+                txtQuantidade.setText(Integer.toString(estoque.getQuantidade()));
+                txtFornecedor.setText(estoque.getFornecedor());
+                txtData.setText(estoque.getData());
+                txtValor.setText(Float.toString(estoque.getValor()));
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(rootPane, "Erro", "Mensagem Ao Usuario", 2);
             }
