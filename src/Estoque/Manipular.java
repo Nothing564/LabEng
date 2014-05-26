@@ -18,11 +18,14 @@ public class Manipular extends javax.swing.JFrame {
      private int pk=0;
      Estoque estoque = new Estoque();
      DaoEstoque estoqueDao = new DaoEstoque();
+     int op=0;
     /**
      * Creates new form Manipular
      */
     public Manipular() {
         initComponents();
+        if (pk!=0)
+            this.diferenciar();
     }
 
     /**
@@ -32,14 +35,20 @@ public class Manipular extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     public void diferenciar (){
-        if(pk!=0){
             try {
                 estoque=(Estoque) estoqueDao.pesquisar(pk);
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(rootPane, "Erro", "Mensagem Ao Usuario", 2);
             }
-        }
+        
     }
+    /*
+    public void executar(){
+        if(this.op==1)
+   //         estoqueDao.alterar(estoque);
+        
+            }*/
+            
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -194,6 +203,16 @@ public class Manipular extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
+    
+    public int getOp() {
+        return op;
+    }
+
+    public void setOp(int op) {
+        this.op = op;
+    }
+
+    
     public int getPk() {
         return pk;
     }

@@ -27,7 +27,8 @@ public class InterfaceEstoque extends javax.swing.JFrame {
     Manipular manipular = new Manipular ();
    DaoEstoque estoque = new DaoEstoque();
    //ModeloTabela modelo = new ModeloTabela(dados, colunas);
-     DefaultTableModel modelo = new DefaultTableModel();  
+     DefaultTableModel modelo = new DefaultTableModel(); 
+     
     
     public InterfaceEstoque() {
         initComponents();
@@ -52,12 +53,10 @@ public class InterfaceEstoque extends javax.swing.JFrame {
     
     public void preencheTabela(String sql){
         int codigo , qtd;
-        int i=0;
         float valor;
         String forn, data;
      banco.abrir();
        banco.executaSQL(sql);
-        System.out.println("Aqui1");
         
       
          
@@ -70,8 +69,6 @@ public class InterfaceEstoque extends javax.swing.JFrame {
                 forn=banco.getRs().getString("Fornecedor");
                 data=banco.getRs().getString("data");  
                 modelo.addRow(new Object[]{codigo, qtd, valor, forn, data});  
-                System.out.println("Entrou: " + i);
-                i++;
             }
           
         } catch (SQLException ex) {
@@ -221,8 +218,10 @@ public class InterfaceEstoque extends javax.swing.JFrame {
         
         int retorno;
         retorno=check();
-        if(retorno==1)
-        manipular.setVisible(true);
+        if(retorno==1){
+            manipular.setPk(0);
+            manipular.setVisible(true);
+        }
         if(retorno==2)
          JOptionPane.showMessageDialog(rootPane, "Somente Usuários Autorizados", "Acesso Negado", 2); 
         if(retorno==0)
@@ -242,11 +241,14 @@ public class InterfaceEstoque extends javax.swing.JFrame {
 
     private void btAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAlterarActionPerformed
        manipular.setVisible(true);
+       manipular.setOp(1);
        manipular.setPk((int) tbDados.getValueAt(tbDados.getSelectedRow(), 0));
+       
     }//GEN-LAST:event_btAlterarActionPerformed
 
     private void btExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btExcluirActionPerformed
         manipular.setVisible(true);
+        manipular.setOp(2);
         manipular.setPk(tbDados.getSelectedRow());
     }//GEN-LAST:event_btExcluirActionPerformed
 
