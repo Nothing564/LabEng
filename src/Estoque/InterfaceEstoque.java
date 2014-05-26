@@ -36,7 +36,7 @@ public class InterfaceEstoque extends javax.swing.JFrame {
         try {
 
             dados=(ArrayList) estoque.listar(null);
-
+            System.out.println(dados.get(0).toString());
        } catch (SQLException ex) {
            JOptionPane.showMessageDialog(null,"ERRO : " + ex);
        }
