@@ -55,11 +55,11 @@ public class InterfaceEstoque extends javax.swing.JFrame {
         int codigo , qtd;
         float valor;
         String forn, data;
-     banco.abrir();
+        banco.abrir();
        banco.executaSQL(sql);
         
       
-         
+        
         tbDados.setModel(modelo);
         try {
             while(banco.getRs().next()){
@@ -240,17 +240,32 @@ public class InterfaceEstoque extends javax.swing.JFrame {
     }//GEN-LAST:event_tbDadosMouseClicked
 
     private void btAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAlterarActionPerformed
+       /*
        manipular.setVisible(true);
        manipular.setOp(1);
        manipular.setPk((int) tbDados.getValueAt(tbDados.getSelectedRow(), 0));
-       
+       */
+         DaoEstoque daoEstoque = new DaoEstoque();
+        Estoque estoque = new Estoque();
+        estoque.setCodigo((int) tbDados.getValueAt(tbDados.getSelectedRow(), 0));
+        estoque.setQuantidade((int) tbDados.getValueAt(tbDados.getSelectedRow(), 1));
+        estoque.setValor((float) tbDados.getValueAt(tbDados.getSelectedRow(), 2));
+        estoque.setFornecedor((String) tbDados.getValueAt(tbDados.getSelectedRow(), 3));
+        estoque.setData((String) tbDados.getValueAt(tbDados.getSelectedRow(), 4));
+        try {
+            daoEstoque.alterar(estoque);
+        } catch (SQLException ex) {
+            Logger.getLogger(InterfaceEstoque.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }//GEN-LAST:event_btAlterarActionPerformed
 
     private void btExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btExcluirActionPerformed
+        /*
         manipular.setVisible(true);
         manipular.setOp(2);
         manipular.setPk(tbDados.getSelectedRow());
-        
+        */
         DaoEstoque daoEstoque = new DaoEstoque();
         Estoque estoque = new Estoque();
         estoque.setCodigo((int) tbDados.getValueAt(tbDados.getSelectedRow(), 0));
