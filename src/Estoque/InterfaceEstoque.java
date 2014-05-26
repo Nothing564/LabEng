@@ -253,22 +253,20 @@ public class InterfaceEstoque extends javax.swing.JFrame {
         if(retorno==1){
         DaoEstoque daoEstoque = new DaoEstoque();
         Estoque estoque = new Estoque();
+      
         estoque.setCodigo((int) tbDados.getValueAt(tbDados.getSelectedRow(), 0));
-           try {
-               /* estoque.setQuantidade((Integer)tbDados.getValueAt(tbDados.getSelectedRow(), 1));
-                estoque.setValor((float) tbDados.getValueAt(tbDados.getSelectedRow(), 2));
-                estoque.setFornecedor((String) tbDados.getValueAt(tbDados.getSelectedRow(), 3));
-                estoque.setData((String) tbDados.getValueAt(tbDados.getSelectedRow(), 4)); 
-                */
-               estoque= (Estoque) daoEstoque.pesquisar(estoque.getCodigo());
-           } catch (SQLException ex) {
-               System.out.println("erro");
-           }
-            System.out.println("codigo:" + estoque.getCodigo());
+        estoque.setQuantidade(Integer.valueOf(String.valueOf(tbDados.getValueAt(tbDados.getSelectedRow(), 1))));
+        estoque.setValor(Float.valueOf(String.valueOf(tbDados.getValueAt(tbDados.getSelectedRow(), 2))));
+        estoque.setFornecedor((String) tbDados.getValueAt(tbDados.getSelectedRow(), 3));
+        estoque.setData((String) tbDados.getValueAt(tbDados.getSelectedRow(), 4));
         try {
+
+            if(daoEstoque.alterar(estoque))
+                System.out.println("Alterado");
             daoEstoque.alterar(estoque);
             JOptionPane.showMessageDialog(rootPane, "Dados Alterados Com Sucesso!", "Mensagem", 1);
              atualizarTabela();
+
         } catch (SQLException ex) {
             System.out.println("Erro" );
         }
