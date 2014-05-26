@@ -49,6 +49,15 @@ public class LivroVO {
         return isbn;
     }
 
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    
     /**
      *
      * @param isbn
