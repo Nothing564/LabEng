@@ -18,13 +18,14 @@ import javax.swing.ListSelectionModel;
  * @author Victor
  */
 public class InterfaceEstoque extends javax.swing.JFrame {
-    String user, pass;
+    String user, pass,sql;
     ArrayList dados = new ArrayList();
    // List rec = new List ();
     String [] colunas = new String[]{"Codigo","Quantidade","Valor","Fornecedor","Data"};
+    Banco banco = new Banco("root","","localhost","livrarialabeng",3306);
     Manipular manipular = new Manipular ();
    DaoEstoque estoque = new DaoEstoque();
-   ModeloTabela modelo = new ModeloTabela(dados, colunas);
+ //  ModeloTabela modelo = new ModeloTabela(dados, colunas);
     
     public InterfaceEstoque() {
         initComponents();
@@ -33,20 +34,73 @@ public class InterfaceEstoque extends javax.swing.JFrame {
         btInserir.setEnabled(true);
         btConsultar.setEnabled(true);
         try {
+
             dados=(ArrayList)estoque.listar(user);
             
             this.preencheTabela();
             
+
+            dados=(ArrayList) estoque.listar(null);
+
        } catch (SQLException ex) {
            JOptionPane.showMessageDialog(null,"ERRO : " + ex);
        }
        
     }
     
+
     public void preencheTabela(){
 //      int n = dados.size();
       tbDados.setModel(new ModeloTabela(dados, colunas));
+    }
+    
+    public void preencheTabela(String SQL){
+      int n=dados.size();
+      
+
        
+       
+       banco.executaSQL(SQL);
+          try {
+          banco.getRs().first();
+      } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null,"ERRO : " + ex);
+      }
+      try {
+          do{
+              dados.add(new Object[] {banco.getRs().getInt("Codigo"),banco.getRs().getInt("Quantidade"),banco.getRs().getFloat("Valor"),banco.getRs().getString("Fornecedor"),banco.getRs().getString("data")});
+          }while(banco.getRs().next());
+      } catch (SQLException ex) {
+          JOptionPane.showMessageDialog(null,"ERRO : " + ex);
+      }
+       
+       
+        ModeloTabela modelo = new ModeloTabela(dados,colunas);
+        tbDados.setModel(modelo);
+       /*
+       
+       tbDados.getColumnModel().getColumn(0).setPreferredWidth(40);
+       tbDados.getColumnModel().getColumn(0).setResizable(false);
+       tbDados.getColumnModel().getColumn(1).setPreferredWidth(155);
+       tbDados.getColumnModel().getColumn(1).setResizable(false);
+       tbDados.getColumnModel().getColumn(2).setPreferredWidth(160);
+       tbDados.getColumnModel().getColumn(2).setResizable(false);
+       
+        tbDados.getColumnModel().getColumn(3).setPreferredWidth(100);
+       tbDados.getColumnModel().getColumn(3).setResizable(false);
+       
+        tbDados.getColumnModel().getColumn(4).setPreferredWidth(95);
+       tbDados.getColumnModel().getColumn(4).setResizable(false);
+       
+        tbDados.getColumnModel().getColumn(5).setPreferredWidth(85);
+       tbDados.getColumnModel().getColumn(5).setResizable(false);
+       
+       
+       tbDados.getTableHeader().setReorderingAllowed(false);
+       tbDados.setAutoResizeMode(tbDados.AUTO_RESIZE_OFF);
+       tbDados.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+       * 
+       * */
     }
   public void verificaTabela (){
     //  if(tbDados.get)
@@ -105,6 +159,11 @@ public class InterfaceEstoque extends javax.swing.JFrame {
         tbDados.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 
         btConsultar.setText("Consultar");
+        btConsultar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btConsultarActionPerformed(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel2.setText("Controle De Estoque");
@@ -172,6 +231,10 @@ public class InterfaceEstoque extends javax.swing.JFrame {
         else
          JOptionPane.showMessageDialog(rootPane, "Somente Usuários Autorizados", "Acesso Negado", 1);   
     }//GEN-LAST:event_btInserirActionPerformed
+
+    private void btConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btConsultarActionPerformed
+        preencheTabela("select * from estoque");
+    }//GEN-LAST:event_btConsultarActionPerformed
 
     /**
      * @param args the command line arguments

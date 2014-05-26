@@ -18,10 +18,9 @@ import java.util.Vector;
  * @author Victor
  */
 public class DaoLivro implements DAO {
-    
+    Banco banco = new Banco("root","","localhost","livrarialabeng",3306);
     PreparedStatement pstm = null;
     Statement stm = null;
-    Banco banco =null;
     ResultSet rs = null;
     String sql = null;
 

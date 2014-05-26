@@ -9,9 +9,11 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -22,6 +24,9 @@ public class Banco {
     private String usuario, senha,servidor, banco;
     private int porta;
     private Connection conexao = null;
+    private Statement stm;
+    private ResultSet rs;
+    
     
     
     
@@ -80,6 +85,18 @@ public class Banco {
         }
     }
     
+    public void executaSQL(String sql) {
+        try {       
+            stm = conexao.createStatement(rs.TYPE_SCROLL_INSENSITIVE,rs.CONCUR_READ_ONLY);
+        } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(null,"Erro no BancoFactory \nERRO: " + ex );
+        }
+        try {
+            rs = stm.executeQuery(sql);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null,"Erro no BancoFactory \nERRO: " + ex );
+        }
+    }
     
     /****************GETTER E SETTER *************************/
 
@@ -94,6 +111,24 @@ public class Banco {
     public String getSenha() {
         return senha;
     }
+
+    public Statement getStm() {
+        return stm;
+    }
+
+    public void setStm(Statement stm) {
+        this.stm = stm;
+    }
+
+    public ResultSet getRs() {
+        return rs;
+    }
+
+    public void setRs(ResultSet rs) {
+        this.rs = rs;
+    }
+    
+    
 
     public void setSenha(String senha) {
         this.senha = senha;
