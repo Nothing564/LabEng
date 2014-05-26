@@ -18,10 +18,11 @@ import javax.swing.ListSelectionModel;
  * @author Victor
  */
 public class InterfaceEstoque extends javax.swing.JFrame {
-    String user, pass;
+    String user, pass,sql;
     ArrayList dados = new ArrayList();
    // List rec = new List ();
     String [] colunas = new String[]{"Codigo","Quantidade","Valor","Fornecedor","Data"};
+    Banco banco = new Banco("root","","localhost","livrarialabeng",3306);
     Manipular manipular = new Manipular ();
    DaoEstoque estoque = new DaoEstoque();
    ModeloTabela modelo = new ModeloTabela(dados, colunas);
@@ -33,7 +34,7 @@ public class InterfaceEstoque extends javax.swing.JFrame {
         btInserir.setEnabled(true);
         btConsultar.setEnabled(true);
         try {
-            dados=(ArrayList) estoque.listar(user);
+            dados=(ArrayList) estoque.listar(null);
        } catch (SQLException ex) {
            JOptionPane.showMessageDialog(null,"ERRO : " + ex);
        }
@@ -42,8 +43,33 @@ public class InterfaceEstoque extends javax.swing.JFrame {
     
     public void preencheTabela(){
       int n=dados.size();
-      tbDados.setModel(modelo);
+      
+       sql="select * from estoque";
        
+       /*
+       tbDados.setModel(modelo);
+       tbDados.getColumnModel().getColumn(0).setPreferredWidth(40);
+       tbDados.getColumnModel().getColumn(0).setResizable(false);
+       tbDados.getColumnModel().getColumn(1).setPreferredWidth(155);
+       tbDados.getColumnModel().getColumn(1).setResizable(false);
+       tbDados.getColumnModel().getColumn(2).setPreferredWidth(160);
+       tbDados.getColumnModel().getColumn(2).setResizable(false);
+       
+        tbDados.getColumnModel().getColumn(3).setPreferredWidth(100);
+       tbDados.getColumnModel().getColumn(3).setResizable(false);
+       
+        tbDados.getColumnModel().getColumn(4).setPreferredWidth(95);
+       tbDados.getColumnModel().getColumn(4).setResizable(false);
+       
+        tbDados.getColumnModel().getColumn(5).setPreferredWidth(85);
+       tbDados.getColumnModel().getColumn(5).setResizable(false);
+       
+       
+       tbDados.getTableHeader().setReorderingAllowed(false);
+       tbDados.setAutoResizeMode(tbDados.AUTO_RESIZE_OFF);
+       tbDados.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+       * 
+       * */
     }
   public void verificaTabela (){
     //  if(tbDados.get)
@@ -102,6 +128,11 @@ public class InterfaceEstoque extends javax.swing.JFrame {
         tbDados.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 
         btConsultar.setText("Consultar");
+        btConsultar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btConsultarActionPerformed(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel2.setText("Controle De Estoque");
@@ -169,6 +200,10 @@ public class InterfaceEstoque extends javax.swing.JFrame {
         else
          JOptionPane.showMessageDialog(rootPane, "Somente Usuários Autorizados", "Acesso Negado", 1);   
     }//GEN-LAST:event_btInserirActionPerformed
+
+    private void btConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btConsultarActionPerformed
+        preencheTabela();
+    }//GEN-LAST:event_btConsultarActionPerformed
 
     /**
      * @param args the command line arguments

@@ -19,7 +19,7 @@ public class DaoEstoque implements DAO {
     
     PreparedStatement pstm = null;
     Statement stm = null;
-    Banco banco =null;
+     Banco banco = new Banco("root","","localhost","livrarialabeng",3306);
     ResultSet rs = null;
     String sql = null;
 
