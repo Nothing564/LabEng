@@ -44,7 +44,7 @@ public class InterfaceEstoque extends javax.swing.JFrame {
     }
     
     public void preencheTabela(String sql){
-      int n=dados.size();
+     banco.abrir();
        banco.executaSQL(sql);
            try {
           banco.getRs().first();
