@@ -87,7 +87,7 @@ public class Banco {
     
     public void executaSQL(String sql) {
         try {       
-            stm = conexao.createStatement(rs.TYPE_SCROLL_INSENSITIVE,rs.CONCUR_READ_ONLY);
+            stm = conexao.createStatement();
         } catch (SQLException ex) {
         JOptionPane.showMessageDialog(null,"Erro no BancoFactory \nERRO: " + ex );
         }
