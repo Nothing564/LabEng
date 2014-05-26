@@ -113,8 +113,6 @@ public class Banco {
             rs = stm.executeQuery(sql);
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null,"Erro no BancoFactory \nERRO: " + ex );
-        }finally{
-            this.fechar();
         }
     }
 
