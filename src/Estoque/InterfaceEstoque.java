@@ -49,14 +49,14 @@ public class InterfaceEstoque extends javax.swing.JFrame {
            try {
           banco.getRs().first();
       } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null,"ERRO : " + ex);
+            JOptionPane.showMessageDialog(null,"ERRO2 : " + ex);
       }
       try {
          do{
              dados.add(new Object[] {banco.getRs().getInt("Codigo"),banco.getRs().getInt("Quantidade"),banco.getRs().getFloat("Valor"),banco.getRs().getString("Fornecedor"),banco.getRs().getString("data")});
           }while(banco.getRs().next());
       } catch (SQLException ex) {
-          JOptionPane.showMessageDialog(null,"ERRO : " + ex);
+          JOptionPane.showMessageDialog(null,"ERRO3 : " + ex);
       }
        
          

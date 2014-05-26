@@ -14,7 +14,7 @@ import javax.swing.JOptionPane;
  * @author Victor
  */
 public class Manipular extends javax.swing.JFrame {
-
+     Banco banco = new Banco("root","","localhost","livrarialabeng",3306);
     /**
      * Creates new form Manipular
      */
@@ -159,6 +159,7 @@ public class Manipular extends javax.swing.JFrame {
             
             JOptionPane.showMessageDialog(rootPane, "Dados Inseridos Com Sucesso", "Mensagem Ao Usuario", 1);
             limparDados();
+            banco.fechar();
         } else{
             JOptionPane.showMessageDialog(rootPane, "Preencha Todos Os Campos!", "Mensagem Ao Usuario", 2);
         }
