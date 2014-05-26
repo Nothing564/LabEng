@@ -108,14 +108,11 @@ public class Banco {
             stm = conexao.createStatement();
         } catch (SQLException ex) {
         JOptionPane.showMessageDialog(null,"Erro no BancoFactory \nERRO: " + ex );
-        this.fechar();
         }
         try {
             rs = stm.executeQuery(sql);
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null,"Erro no BancoFactory \nERRO: " + ex );
-        }finally{
-            this.fechar();
         }
     }
 
