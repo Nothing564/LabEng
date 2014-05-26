@@ -184,6 +184,7 @@ public class FormNovoCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_btCancelarActionPerformed
 
     /**
+     * Conecta ao banco de dados.
      */
     public void conexaoBD(){
         try {
