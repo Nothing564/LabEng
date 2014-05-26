@@ -250,6 +250,16 @@ public class InterfaceEstoque extends javax.swing.JFrame {
         manipular.setVisible(true);
         manipular.setOp(2);
         manipular.setPk(tbDados.getSelectedRow());
+        
+        DaoEstoque daoEstoque = new DaoEstoque();
+        Estoque estoque = new Estoque();
+        estoque.setCodigo((int) tbDados.getValueAt(tbDados.getSelectedRow(), 0));
+        try {
+            daoEstoque.excluir(estoque);
+        } catch (SQLException ex) {
+            Logger.getLogger(InterfaceEstoque.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }//GEN-LAST:event_btExcluirActionPerformed
 
     /**
