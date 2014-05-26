@@ -35,27 +35,39 @@ public class InterfaceEstoque extends javax.swing.JFrame {
         btConsultar.setEnabled(true);
         try {
 
-            dados=(ArrayList)estoque.listar(user);
-            
-            this.preencheTabela();
-            
-
             dados=(ArrayList) estoque.listar(null);
 
        } catch (SQLException ex) {
            JOptionPane.showMessageDialog(null,"ERRO : " + ex);
        }
-       
+       //this.preencheTabela("select * from estoque");
     }
     
-    public void preencheTabela(){
+    public void preencheTabela(String sql){
       int n=dados.size();
-      
+       banco.executaSQL(sql);
+           try {
+          banco.getRs().first();
+      } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null,"ERRO : " + ex);
+      }
+      try {
+         do{
+             dados.add(new Object[] {banco.getRs().getInt("Codigo"),banco.getRs().getInt("Quantidade"),banco.getRs().getFloat("Valor"),banco.getRs().getString("Fornecedor"),banco.getRs().getString("data")});
+          }while(banco.getRs().next());
+      } catch (SQLException ex) {
+          JOptionPane.showMessageDialog(null,"ERRO : " + ex);
+      }
+       
+         
+        ModeloTabela modelo = new ModeloTabela(dados,colunas);
+        tbDados.setModel(modelo);
 
-       sql="select * from estoque";
+       
+       tbDados.setModel(modelo);
 
        /*
-       tbDados.setModel(modelo);
+       
        tbDados.getColumnModel().getColumn(0).setPreferredWidth(40);
        tbDados.getColumnModel().getColumn(0).setResizable(false);
        tbDados.getColumnModel().getColumn(1).setPreferredWidth(155);
@@ -210,7 +222,8 @@ public class InterfaceEstoque extends javax.swing.JFrame {
     }//GEN-LAST:event_btInserirActionPerformed
 
     private void btConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btConsultarActionPerformed
-        preencheTabela();
+        preencheTabela("select * from estoque");
+
     }//GEN-LAST:event_btConsultarActionPerformed
 
     /**
