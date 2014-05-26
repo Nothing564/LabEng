@@ -26,7 +26,8 @@ public class InterfaceEstoque extends javax.swing.JFrame {
     Banco banco = new Banco("root","","localhost","livrarialabeng",3306);
     Manipular manipular = new Manipular ();
    DaoEstoque estoque = new DaoEstoque();
-   ModeloTabela modelo = new ModeloTabela(dados, colunas);
+   //ModeloTabela modelo = new ModeloTabela(dados, colunas);
+     DefaultTableModel modelo = new DefaultTableModel();  
     
     public InterfaceEstoque() {
         initComponents();
@@ -34,6 +35,11 @@ public class InterfaceEstoque extends javax.swing.JFrame {
         btExcluir.setEnabled(false);
         btInserir.setEnabled(true);
         btConsultar.setEnabled(true);
+        modelo.addColumn("Codigo");
+        modelo.addColumn("Quantidade");
+        modelo.addColumn("Valor");
+        modelo.addColumn("Fornecedor");
+        modelo.addColumn("Data");
         try {
 
             dados=(ArrayList) estoque.listar(null);
@@ -53,7 +59,7 @@ public class InterfaceEstoque extends javax.swing.JFrame {
        banco.executaSQL(sql);
         System.out.println("Aqui1");
         
-        DefaultTableModel modelo = new DefaultTableModel();  
+      
          
         tbDados.setModel(modelo);
         try {
@@ -62,7 +68,8 @@ public class InterfaceEstoque extends javax.swing.JFrame {
                 qtd=banco.getRs().getInt("Quantidade");
                 valor=banco.getRs().getFloat("Valor");
                 forn=banco.getRs().getString("Fornecedor");
-                data=banco.getRs().getString("data");
+                data=banco.getRs().getString("data");  
+                modelo.addRow(new Object[]{codigo, qtd, valor, forn, data});  
                 System.out.println("Entrou: " + i);
                 i++;
             }
